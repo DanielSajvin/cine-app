@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Varela+Round&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Varela Round", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #333;
+}
+
+.container {
+  display: flex;
+  width: 900px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.login-box {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #f8b9b9;
+    border-radius: 5px;
+    background-color: #ffe6e6;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffc5c5; /* color default */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #4a0505;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff6565; /* color hover */
+    color: #4a0505;
+}
+
+button:active {
+    background-color: #ff6565; /* color active */
+    color: #4a0505;
+}
+
+button:disabled {
+    background-color: #ffdfdf; /* color disabled */
+    color: #ff6565;
+    cursor: not-allowed;
+}
+
+p {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Estilos para los enlaces */
+p a {
+    text-decoration: none;
+    color: #4a0505;
+}
+
+p a:hover {
+    color: #ff6565;
+}
+
+p a:active {
+    color: #ff6565;
+}
+
+/* Estilo para el enlace de Login */
+.login-link {
+  text-decoration: none;
+  color: #4a0505;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #ff6565;
+}
+
+.login-link:active {
+  color: #ff6565;
+}
+
+.image-section {
+  width: 50%;
+  background-image: url('./images/red-texture.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.overlay::after {
+    content: '';
+    display: block;
+    width: 350px;
+    height: 250px;
+    background-image: url('./images/cinema.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right center;
+    margin: 20px auto o auto;
+}

@@ -1,6 +1,8 @@
 const express = require("express");
 const peliculaRouter = express.Router();
 
+const { verificarToken, verificarAdmin } = require("../../middlewares/auth");
+
 const {
   crearPelicula,
   buscarPeliculaPorNombre,
@@ -12,13 +14,13 @@ const {
 peliculaRouter.use((req, res, next) => {
   console.log("revisar si si es admin  y esta auth");
   next();
-})
+});
 
 // Definir la ruta
-peliculaRouter.post("/crearPelicula", crearPelicula);
+peliculaRouter.post("/crearPelicula", verificarToken, verificarAdmin, crearPelicula);
 peliculaRouter.get("/buscarPelicula", buscarPeliculaPorNombre);
-peliculaRouter.put("/actualizarPelicula/:id", actualizarPelicula);
-peliculaRouter.delete("/eliminarPelicula/:id", eliminarPelicula);
+peliculaRouter.put("/actualizarPelicula/:id", verificarToken, verificarAdmin, actualizarPelicula);
+peliculaRouter.delete("/eliminarPelicula/:id", verificarToken, verificarAdmin, eliminarPelicula);
 peliculaRouter.get("/listarPeliculas", listarPeliculas);
 
 module.exports = peliculaRouter;
