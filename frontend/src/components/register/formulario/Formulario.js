@@ -1,37 +1,65 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from 'react-router-dom';
+import "../../login/login.css"
 
-function Formulario({ onFormComplete }) {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    user: "",
-    contrasena: "",
-  });
+function Formulario({onFormComplete}) {
+  const [nombre, setNombre] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!nombre || !userName || !password) {
+      setMensaje("Por favor, completa todos los campos.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setMensaje("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/usuarios/registrarUsuario",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nombre,
+            userName,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMensaje(data.mensaje);
+        onFormComplete(true); // Llama a la función de callback para indicar que el formulario se ha completado
+      } else {
+        setMensaje(data.mensaje);
+      }
+    } catch (error) {
+      console.error("Error al registrar el usuario:", error);
+      setMensaje("Hubo un error: "+ error.message);
+    }
   };
 
-  // Verifica si todos los campos tienen contenido
-  useEffect(() => {
-    const isComplete = Object.values(formData).every(
-      (value) => value.trim() !== ""
-    );
-    onFormComplete(isComplete);
-  }, [formData, onFormComplete]);
-
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="nombre">Nombre</label>
       <input
         type="text"
         name="nombre"
         id="nombre"
-        value={formData.nombre}
-        onChange={handleChange}
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
         required
       />
 
@@ -40,8 +68,8 @@ function Formulario({ onFormComplete }) {
         type="text"
         name="user"
         id="user"
-        value={formData.user}
-        onChange={handleChange}
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
         required
       />
 
@@ -50,12 +78,15 @@ function Formulario({ onFormComplete }) {
         type="password"
         name="contrasena"
         id="contrasena"
-        value={formData.contrasena}
-        onChange={handleChange}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
       />
 
       <button type="submit">Crear Cuenta</button>
+
+      {mensaje && <p>{mensaje}</p>}
+    
     </form>
   );
 }
