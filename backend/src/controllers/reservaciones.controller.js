@@ -52,8 +52,16 @@ const crearReservacion = async (req, res) => {
   }
 };
 
-const listarReservaciones = async (req, res) => {};
+const listarReservaciones = async (req, res) => {
+  try {
+    const [reservaciones] = await pool.query(queries.listarReservaciones);
+    res.json(reservaciones);
+  } catch (error) {
+    console.error("Error al listar reservaciones:", error);
+    res.status(500).json({ message: "Error al obtener reservaciones", error });
+  }
+};
 
 const actulizarReservacion = async (req, res) => {};
 
-module.exports = { crearReservacion };
+module.exports = { crearReservacion, listarReservaciones };

@@ -7,4 +7,22 @@ module.exports = {
       INSERT INTO reservaciones (fecha, estado, usuarios_id, asientos_id) 
       VALUES (?, 'reservado', ?, ?)
     `,
+
+  listarReservaciones: `
+    SELECT 
+      r.id,
+      r.fecha,
+      r.estado,
+      u.userName AS usuario,
+      a.fila,
+      a.columna,
+      s.name AS sala,
+      p.name AS pelicula
+    FROM reservaciones r
+    INNER JOIN usuarios u ON r.usuarios_id = u.id
+    INNER JOIN asientos a ON r.asientos_id = a.id
+    INNER JOIN salas s ON a.salas_id = s.id
+    INNER JOIN peliculas p ON s.peliculas_id = p.id
+    ORDER BY r.fecha DESC
+  `,
 };
