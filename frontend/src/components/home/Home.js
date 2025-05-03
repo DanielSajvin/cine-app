@@ -5,46 +5,63 @@ import Footer from "../header/Footer";
 import "./styles/Home.css";
 
 const Home = () => {
-  // Datos simulados como si vinieran de la base de datos
-  const usuario = "Carlos";
-  const peliculas = [
-    {
-      titulo: "Guardianes de la Galaxia",
-      descripcion:
-        "Cuenta la historia de un grupo de forajidos intergalácticos que se unen para salvar el universo",
-      imagen: "ruta/guardianes.jpg",
-    },
-    {
-      titulo: "Shrek",
-      descripcion:
-        "Historia de un ogro verde que junto a su amigo burro, rescatan a una princesa.",
-      imagen: "ruta/shrek.jpg",
-    },
-    {
-      titulo: "Rápidos y Furiosos",
-      descripcion:
-        "Es una película de acción de 2001 dirigida por Rob Cohen y protagonizada por Paul Walker y Vin Diesel",
-      imagen: "ruta/rapidos.jpg",
-    },
-  ];
+  const [peliculas, setPeliculas] = useState([]);
+  const [usuario, setUsuario] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [tipoUsuario, setTipoUsuario] = useState(null); // Estado para almacenar el tipo de usuario
+
+  // Verifica si el token existe y decodifica el token para obtener el nombre de usuario y tipo de usuario
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token){
+      try {
+        const decodedToken = jwtDecode(token);
+        setUsuario(decodedToken.userName); // Almacena el nombre de usuario en el estado
+        setTipoUsuario(decodedToken.type); // Almacena el tipo de usuario en el estado
+        console.log("Tipo de usuario:", decodedToken.type); // Muestra el tipo de usuario en la consola
+        console.log("Nombre de usuario:", decodedToken.userName); // Muestra el nombre de usuario en la consola
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+      }
+    }
+  }, []); 
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/pelicula/listarPeliculas")
+      .then((res) => res.json())
+      .then((data) => {
+        setPeliculas(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las peliculas:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="app-container">
-      <Header usuario={usuario} />
+      {usuario && tipoUsuario && (
+        <Header usuario={usuario} tipoUsuario={tipoUsuario} />
+      )}
 
       <main className="peliculas-container">
-        {peliculas.map((peli, index) => (
-          <div className="pelicula-card" key={index}>
-            <img
-              src={peli.imagen}
-              alt={peli.titulo}
-              className="pelicula-imagen"
-            />
-            <h3>{peli.titulo}</h3>
-            <p>{peli.descripcion}</p>
-            <button className="reservar-btn">Reservar Asiento</button>
-          </div>
-        ))}
+        {loading ? (
+          <p>Cargando películas...</p>
+        ) : (
+          peliculas.map((peli, index) => (
+            <div className="pelicula-card" key={index}>
+              <img
+                src={peli.poster} // Usamos la URL de la imagen que viene desde la BD
+                alt={peli.name}
+                className="pelicula-imagen"
+              />
+              <h3>{peli.name}</h3>
+              <p>{peli.description}</p>
+              <button className="reservar-btn">Reservar Asiento</button>
+            </div>
+          ))
+        )}
       </main>
 
       <Footer />
