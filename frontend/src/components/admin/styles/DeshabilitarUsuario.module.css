@@ -9,13 +9,14 @@ body {
   overflow-x: hidden;
 }
 
-.container {
+.containerLisarUsuario {
   padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
   width: 100%;
   flex-grow: 1;
+  display: block;
 }
 
 .container h1 {
@@ -25,13 +26,13 @@ body {
   margin-bottom: 30px;
 }
 
-.user-list {
+.userList {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.user-card {
+.userCard {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,22 +44,22 @@ body {
   transition: transform 0.2s;
 }
 
-.user-card:hover {
+.userCard:hover {
   transform: scale(1.01);
 }
 
-.user-info h3 {
+.userInfo h3 {
   margin: 0;
   font-size: 1.2rem;
   color: #092284;
 }
 
-.user-info p {
+.userInfo p {
   margin: 4px 0;
   color: #000;
 }
 
-.user-role {
+.userRole {
   font-weight: bold;
 }
 
@@ -84,7 +85,7 @@ body {
 }
 
 /* BOTÓN DE DESHABILITAR - ESTILO DE PELIGRO (ROJO) */
-.disable-btn {
+.disableBtn {
   background-color: #e53935; /* rojo fuerte */
   color: white;
   border: none;
@@ -96,20 +97,29 @@ body {
   font-family: inherit;
 }
 
-.disable-btn:hover {
+.disableBtn:hover {
   background-color: #b71c1c;
 }
-
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 70vh; /* Ajusta la altura máxima según sea necesario */
+  overflow-y: auto; /* Habilita el scroll vertical */
+  padding-right: 10px; /* Espacio para evitar que el scroll tape contenido */
+  box-sizing: border-box;
+}
 /* BOTÓN DESACTIVADO */
-.disable-btn:disabled {
+.disableBtn:disabled {
   background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
 }
 
-.app-container {
+.appContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100vw;
 }
 

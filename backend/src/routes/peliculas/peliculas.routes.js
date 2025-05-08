@@ -12,7 +12,6 @@ const {
 } = require("../../controllers/peliculas.controller");
 
 peliculaRouter.use((req, res, next) => {
-  console.log("revisar si si es admin  y esta auth");
   next();
 });
 

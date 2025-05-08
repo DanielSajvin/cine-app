@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+.formularioWrapper {
+  font-family: "Varela Round", sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f7ff;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.formularioContainer {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+  display: block;
+  background: #bbdefc;
+  border-radius: 8px;
+  border: 1px solid #128ae5;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tituloFormulario {
+  text-align: center;
+  font-size: 2rem;
+  color: #092284;
+  margin-bottom: 30px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #092284;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px;
+  background-color: #e1effd;
+  border: 1px solid #128ae5;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.formInput:focus {
+  border-color: #092284;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(9, 34, 132, 0.2);
+}
+
+.formTextarea {
+  composes: formInput;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.imagePreview {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.previewImage {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+  border: 1px solid #128ae5;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.submitBtn {
+  background-color: #128ae5;
+  color: white;
+}
+
+.submitBtn:hover {
+  background-color: #092284;
+  transform: translateY(-2px);
+}
+
+.cancelBtn {
+  background-color: #e53935;
+  color: white;
+}
+
+.cancelBtn:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formActions {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

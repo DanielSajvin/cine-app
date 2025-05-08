@@ -127,9 +127,27 @@ const cambiarRolUsuario = async (req, res) => {
   }
 };
 
+const deshabilitarUsuario = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const [result] = await pool.query(queries.deshabilitarUsuario, [userId]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
+    }
+
+    res.json({ message: "Usuario deshabilitado exitosamente." });
+  } catch (error) {
+    console.error("Error al deshabilitar usuario:", error);
+    res.status(500).json({ message: "Error al deshabilitar el usuario", error });
+  }
+};
+
 module.exports = {
   obtenerUsuarios,
   registrarUsuario,
   loginUsuario,
   cambiarRolUsuario,
+  deshabilitarUsuario,
 };
