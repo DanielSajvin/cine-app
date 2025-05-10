@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+.actualizarPelicula-container {
+  font-family: "Varela Round", sans-serif;
+  background-color: #f0f7ff;
+  color: #333;
+  line-height: 1.6;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.appContainerModificarPelicula {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+  }
+
+.actualizarPelicula-title {
+  color: #092284;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.actualizarPelicula-subtitle {
+  color: #092284;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #128ae5;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.actualizarPelicula-box {
+  background: #bbdefc;
+  border: 1px solid #128ae5;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.actualizarPelicula-selectorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.actualizarPelicula-tableContainer {
+  overflow-x: auto;
+}
+
+.actualizarPelicula-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #e1effd;
+}
+
+.actualizarPelicula-table th,
+.actualizarPelicula-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #128ae5;
+}
+
+.actualizarPelicula-table th {
+  background-color: #128ae5;
+  color: white;
+  font-weight: 600;
+}
+
+.actualizarPelicula-table tr:hover {
+  background-color: #d0e5fb;
+}
+
+.actualizarPelicula-poster {
+  width: 50px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #128ae5;
+}
+
+.actualizarPelicula-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f7ff;
+  }
+  
+  .actualizarPelicula-main {
+    padding: 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1;
+    display: flex;
+  }
+  
+
+.actualizarPelicula-btn {
+  padding: 6px 12px;
+  background-color: #128ae5;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.actualizarPelicula-btn:hover {
+  background-color: #092284;
+  transform: translateY(-2px);
+}
+
+.actualizarPelicula-formGroup {
+  margin-bottom: 20px;
+}
+
+.actualizarPelicula-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #092284;
+}
+
+.actualizarPelicula-input,
+.actualizarPelicula-textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: #e1effd;
+  border: 1px solid #128ae5;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.actualizarPelicula-input:focus,
+.actualizarPelicula-textarea:focus {
+  border-color: #092284;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(9, 34, 132, 0.2);
+}
+
+.actualizarPelicula-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.actualizarPelicula-imagePreview {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.actualizarPelicula-imagePreview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+  border: 1px solid #128ae5;
+}
+
+.actualizarPelicula-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.actualizarPelicula-submit {
+  background-color: #128ae5;
+  color: white;
+}
+
+.actualizarPelicula-submit:hover {
+  background-color: #092284;
+  transform: translateY(-2px);
+}
+
+.actualizarPelicula-cancel {
+  background-color: #e53935;
+  color: white;
+}
+
+.actualizarPelicula-cancel:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .actualizarPelicula-container {
+    padding: 20px 15px;
+  }
+
+  .actualizarPelicula-selectorHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actualizarPelicula-table {
+    font-size: 0.9rem;
+  }
+
+  .actualizarPelicula-table th,
+  .actualizarPelicula-table td {
+    padding: 8px 10px;
+  }
+
+  .actualizarPelicula-actions {
+    flex-direction: column;
+  }
+
+  .actualizarPelicula-btn,
+  .actualizarPelicula-submit,
+  .actualizarPelicula-cancel {
+    width: 100%;
+  }
+}
