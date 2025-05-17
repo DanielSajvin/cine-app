@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Header from "../header/Header";
 import Footer from "../header/Footer";
@@ -9,6 +10,7 @@ const Home = () => {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tipoUsuario, setTipoUsuario] = useState(null); // Estado para almacenar el tipo de usuario
+  const navigate = useNavigate();
 
   // Verifica si el token existe y decodifica el token para obtener el nombre de usuario y tipo de usuario
   useEffect(() => {
@@ -24,7 +26,7 @@ const Home = () => {
         console.error("Error al decodificar el token:", error);
       }
     }
-  }, []); 
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:4000/api/pelicula/listarPeliculas")
@@ -58,7 +60,7 @@ const Home = () => {
               />
               <h3>{peli.name}</h3>
               <p>{peli.description}</p>
-              <button className="reservar-btn">Reservar Asiento</button>
+              <button className="reservar-btn" onClick={() => navigate(`/sala/${peli.id}`)}>Reservar Asiento</button>
             </div>
           ))
         )}

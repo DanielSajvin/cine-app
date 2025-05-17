@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+.bodySala {
+  padding-top: 160px;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #f0f7ff;
+  font-family: "Varela Round", sans-serif;
+}
+
+.container {
+  margin-top: 30px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.container h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #092284;
+  margin-bottom: 30px;
+}
+
+.screen {
+  width: 80%;
+  height: 40px;
+  margin: 0 auto 40px;
+  background: linear-gradient(to bottom, #128ae5, #0a5da6);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.seatsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.seatRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rowLabel {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #092284;
+  margin-right: 5px;
+}
+
+.seat {
+  width: 32px;
+  height: 32px;
+  background-color: #bbdefc;
+  border: 2px solid #128ae5;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #092284;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.seat:hover:not(.occupied):not(.spacer) {
+  transform: scale(1.1);
+  background-color: #e1effd;
+}
+
+.spacer {
+  background-color: transparent;
+  border: none;
+  width: 40px;
+  cursor: default;
+}
+
+.free {
+  background-color: #bbdefc;
+  border-color: #128ae5;
+}
+
+.occupied {
+  background-color: #ffcdd2;
+  border-color: #b71c1c;
+  cursor: not-allowed;
+}
+
+.selected {
+  background-color: #092284;
+  color: white;
+  border-color: #092284;
+}
+
+.cinemaInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.reserveBtn {
+  display: block;
+  margin: 0 auto;
+  background-color: #092284;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: "Varela Round", sans-serif;
+}
+
+.reserveBtn:hover {
+  background-color: #128ae5;
+}
+
+@media (max-width: 600px) {
+  .seat {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+
+  .cinemaInfo {
+    flex-direction: column;
+  }
+
+  .legend {
+    justify-content: center;
+  }
+}

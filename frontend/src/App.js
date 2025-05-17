@@ -10,6 +10,7 @@ import CrearSala from "./components/admin/CrearSala";
 import ModificarSala from "./components/admin/ModificarSala";
 import CrearPelicula from "./components/admin/CrearPelicula";
 import ModificarPelicula from "./components/admin/ModificarPelicula";
+import SalaVista from "./components/sala/SalaVista"
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route path="/login" element={<Formulario />} />
+
+        <Route path="/sala/:idPelicula" element={<SalaVista />} />
 
         <Route
           path="/home"

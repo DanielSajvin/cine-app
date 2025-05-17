@@ -188,4 +188,39 @@ const eliminarSala = async (req, res) => {
   }
 };
 
-module.exports = { crearSala, listarSalas, actualizarSala, eliminarSala };
+const obtenerSalaConPelicula = async (req, res) => {
+  const { id } = req.params; // id es el de la película
+
+  try {
+    // Verificar si hay una sala asociada a esa película
+    const [sala] = await pool.query( 
+      queries.verificarSalaPelicula,
+      [id]
+    );
+
+    if (sala.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontró una sala asociada a esta película." });
+    }
+
+    // Obtener la sala junto con el nombre de la película
+    const [salaConPelicula] = await pool.query(
+      queries.obtenerSalaConNombreDePelicula,
+      [id]
+    );
+
+    res.json({ sala: salaConPelicula[0] });
+  } catch (error) {
+    console.log("Error al obtener la sala: ", error);
+    res.status(500).json({ message: "Error al obtener la sala", error });
+  }
+};
+
+module.exports = {
+  crearSala,
+  listarSalas,
+  actualizarSala,
+  eliminarSala,
+  obtenerSalaConPelicula,
+};
