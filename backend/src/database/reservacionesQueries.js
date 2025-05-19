@@ -25,4 +25,15 @@ module.exports = {
     INNER JOIN peliculas p ON s.peliculas_id = p.id
     ORDER BY r.fecha DESC
   `,
+  asientosOcupados: `
+    SELECT asientos_id 
+    FROM reservaciones 
+    WHERE fecha = ? AND estado = 'reservado'
+  `,
+  obtenerAsientosReservadosPorSala: `
+  SELECT a.fila, a.columna
+  FROM reservaciones r
+  JOIN asientos a ON r.asientos_id = a.id
+  WHERE a.salas_id = ? AND r.estado = 'activo'
+`,
 };

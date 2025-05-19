@@ -13,6 +13,10 @@ const SalaVista = () => {
   const [sala, setSala] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // estados para asientos seleccionados y ocupados
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [occupiedSeats, setOccupiedSeats] = useState([]);
+
   // Verifica si el token existe y decodifica el token para obtener el nombre de usuario y tipo de usuario
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,28 +33,47 @@ const SalaVista = () => {
 
   // obtener sala asociada a la pelicula
   useEffect(() => {
-    fetch(
-      `http://localhost:4000/api/salas/obtenerSalaConPelicula/${idPelicula}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setSala(data.sala);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al obtener la sala:", error);
-        setLoading(false);
-      });
-  }, [idPelicula]);
+    const fetchSalaYAsientos = async () => {
+      try {
+        const salaRes = await fetch(
+          `http://localhost:4000/api/salas/obtenerSalaConPelicula/${idPelicula}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const salaData = await salaRes.json();
+        setSala(salaData.sala);
 
-  if (loading) return <p>Cargando sala...</p>;
-  if (!sala) return <p>No se encontró la sala para esta película.</p>;
+        // Obtener asientos reservados con el ID de la sala
+        const asientosRes = await fetch(
+          `http://localhost:4000/api/reservaciones/asientosReservados/${salaData.sala.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const dataAsientos = await asientosRes.json();
+        // Convierte { fila: "A", columna: 1 } => "A1"
+        const idsReservados = dataAsientos.asientosReservados.map(
+          (a) => `${a.fila}${a.columna}`
+        );
+        setOccupiedSeats(idsReservados);
+      } catch (error) {
+        console.error("Error al obtener sala o asientos reservados:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSalaYAsientos();
+  }, [idPelicula]);
 
   const generarLetras = (num) => {
     const letras = [];
@@ -60,8 +83,23 @@ const SalaVista = () => {
     return letras;
   };
 
+  if (loading || !sala) {
+    return <div>Cargando sala...</div>;
+  }
+
   const filas = generarLetras(sala.rows);
   const columnas = Array.from({ length: sala.columns }, (_, i) => i + 1);
+
+  // manejar selección de asientos
+  const toggleSeat = (seatId) => {
+    if (occupiedSeats.includes(seatId)) return;
+
+    if (selectedSeats.includes(seatId)) {
+      setSelectedSeats(selectedSeats.filter((id) => id !== seatId));
+    } else {
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
+  };
 
   return (
     <div className={styles.bodySala}>
@@ -78,13 +116,17 @@ const SalaVista = () => {
                 <div className={styles.rowLabel}>{row}</div>
                 {columnas.map((col) => {
                   const seatId = `${row}${col}`;
-                  const status = "free"; // luego lo puedes hacer dinámico
+                  let status = "free";
+                  if (occupiedSeats.includes(seatId)) status = "occupied";
+                  else if (selectedSeats.includes(seatId)) status = "selected";
+
                   return (
                     <div
                       key={seatId}
                       id={seatId}
                       data-status={status}
                       className={`${styles.seat} ${styles[status]}`}
+                      onClick={() => toggleSeat(seatId)}
                     >
                       {col}
                     </div>

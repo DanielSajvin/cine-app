@@ -8,7 +8,7 @@ const Header = ({ usuario, tipoUsuario }) => {
     localStorage.removeItem("token"); // Eliminar el token del localStorage
     navigate("/login"); // Redirigir al usuario a la página de inicio de sesión
   };
-  console.log("Renderizando Header con: ", usuario, tipoUsuario); // Verifica los valores de usuario y tipoUsuario
+  // console.log("Renderizando Header con: ", usuario, tipoUsuario); // Verifica los valores de usuario y tipoUsuario
 
   return (
     <header className="header">

@@ -43,6 +43,17 @@ const crearSala = async (req, res) => {
         .json({ message: "La película específicada no existe" });
     }
 
+    const [salaExistente] = await pool.query(
+      queries.salaExistente,
+      [name, peliculas_id]
+    );
+
+    if (salaExistente.length > 0) {
+      return res.status(409).json({
+        message: "Ya existe una sala con este nombre para esta película.",
+      });
+    }
+
     // crear la sala
     const [result] = await pool.query(queries.crearSala, [
       name,
@@ -50,6 +61,18 @@ const crearSala = async (req, res) => {
       columns,
       peliculas_id,
     ]);
+    const salaId = result.insertId;
+
+    // Generar los asientos para la sala
+    const asientos = [];
+    for (let fila = 1; fila <= rows; fila++) {
+      for (let columna = 1; columna <= columns; columna++) {
+        asientos.push([fila, columna, salaId]);
+      }
+    }
+
+    // insertar los asientos en la base de datos
+    await pool.query(queries.insertarAsientos, [asientos]);
 
     // obtener la sala recién creada, incluyendo el nombre de la película
     const [sala] = await pool.query(queries.obtenerSalaConPelicula, [
@@ -193,10 +216,7 @@ const obtenerSalaConPelicula = async (req, res) => {
 
   try {
     // Verificar si hay una sala asociada a esa película
-    const [sala] = await pool.query( 
-      queries.verificarSalaPelicula,
-      [id]
-    );
+    const [sala] = await pool.query(queries.verificarSalaPelicula, [id]);
 
     if (sala.length === 0) {
       return res
