@@ -101,6 +101,45 @@ const SalaVista = () => {
     }
   };
 
+  const handleReservarAsientos = async () => {
+    if (selectedSeats.length === 0) {
+      alert("Selecciona al menos un asiento");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        "http://localhost:4000/api/reservaciones/crearReservacion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            asientos: selectedSeats,
+            salaId: sala.id,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Reservación realizada exitosamente");
+
+        // Agrega los nuevos asientos a la lista de ocupados
+        setOccupiedSeats([...occupiedSeats, ...selectedSeats]);
+        setSelectedSeats([]); // limpia la selección
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Error al reservar asientos:", error);
+      alert("Error en la conexión al servidor");
+    }
+  };
+
   return (
     <div className={styles.bodySala}>
       <Header usuario={usuario} tipoUsuario={tipoUsuario} />
@@ -153,7 +192,12 @@ const SalaVista = () => {
             </div>
           </div>
 
-          <button className={styles.reserveBtn}>Reservar Asientos</button>
+          <button
+            className={styles.reserveBtn}
+            onClick={handleReservarAsientos}
+          >
+            Reservar Asientos
+          </button>
         </div>
       </div>
       <Footer />

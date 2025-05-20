@@ -43,10 +43,10 @@ const crearSala = async (req, res) => {
         .json({ message: "La película específicada no existe" });
     }
 
-    const [salaExistente] = await pool.query(
-      queries.salaExistente,
-      [name, peliculas_id]
-    );
+    const [salaExistente] = await pool.query(queries.salaExistente, [
+      name,
+      peliculas_id,
+    ]);
 
     if (salaExistente.length > 0) {
       return res.status(409).json({
@@ -65,9 +65,10 @@ const crearSala = async (req, res) => {
 
     // Generar los asientos para la sala
     const asientos = [];
-    for (let fila = 1; fila <= rows; fila++) {
+    for (let i = 0; i < rows; i++) {
+      const filaLetra = String.fromCharCode(65 + i); // 65 = 'A', 66 = 'B', etc.
       for (let columna = 1; columna <= columns; columna++) {
-        asientos.push([fila, columna, salaId]);
+        asientos.push([filaLetra, columna, salaId]);
       }
     }
 

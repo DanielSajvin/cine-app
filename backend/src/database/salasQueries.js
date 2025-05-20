@@ -22,5 +22,5 @@ module.exports = {
   SELECT COUNT(*) AS total
   FROM reservaciones r
   JOIN asientos a ON r.asientos_id = a.id
-  WHERE a.salas_id = ? AND r.estado = 'reservado'`, 
+  WHERE a.salas_id = ? AND r.estado = 'reservado'`,
 };

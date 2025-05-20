@@ -1,54 +1,56 @@
 const pool = require("../config/db");
 const queries = require("../database/reservacionesQueries");
+const jwt = require("jsonwebtoken");
 
 const crearReservacion = async (req, res) => {
-  const { fecha, asientos_id } = req.body;
-  const usuarioId = req.usuario.id; // obtenido desde el token JWT
+  const { asientos, salaId } = req.body;
 
-  // Validar que no falte nada
-  if (!fecha || !asientos_id) {
-    return res
-      .status(400)
-      .json({ message: "Todos los campos son obligatorios." });
-  }
-
-  // Validar fecha dentro de los próximos 8 días
-  const hoy = new Date();
-  const fechaLimite = new Date(hoy);
-  fechaLimite.setDate(hoy.getDate() + 8);
-  const fechaReservacion = new Date(fecha);
-
-  if (isNaN(fechaReservacion.getTime())) {
-    return res.status(400).json({ message: "La fecha no es válida." });
-  }
-
-  if (fechaReservacion < hoy || fechaReservacion > fechaLimite) {
-    return res.status(400).json({
-      message:
-        "La reservación solo puede hacerse dentro de los próximos 8 días.",
-    });
-  }
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "Token no proporcionado" });
 
   try {
-    // Verificar si el asiento ya está reservado en esa fecha
-    const [resultado] = await pool.query(
-      queries.verificarDisponibilidadAsiento,
-      [asientos_id, fecha]
-    );
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decoded.userId;
+    const fecha = new Date();
+    const estado = "pendiente";
 
-    if (resultado.length > 0) {
-      return res.status(400).json({
-        message: "Este asiento ya está reservado para la fecha seleccionada.",
-      });
+    // Crear reservación para cada asiento
+    for (let asiento of asientos) {
+      const [fila, ...colRest] = asiento;
+      const columna = parseInt(colRest.join(""));
+
+      // Normaliza fila a mayúscula si así están en la BD
+      const filaNormalizada = fila.toUpperCase();
+
+      // Obtener el id del asiento desde la base de datos
+      console.log("Buscando asiento:", { fila, columna, salaId });
+      const [asientoResult] = await pool.query(queries.obtenerIdDelAsiento, [
+        filaNormalizada,
+        columna,
+        salaId,
+      ]);
+
+      if (asientoResult.length === 0) {
+        return res
+          .status(400)
+          .json({ error: `Asiento ${asiento} no encontrado.` });
+      }
+
+      const asientoId = asientoResult[0].id;
+
+      // Insertar reservación
+      await pool.query(queries.insertarReservacion, [
+        fecha,
+        estado,
+        userId,
+        asientoId,
+      ]);
     }
 
-    // Crear la reservación
-    await pool.query(queries.crearReservacion, [fecha, usuarioId, asientos_id]);
-
-    res.status(201).json({ message: "Reservación realizada con éxito." });
+    res.json({ message: "Reservación creada correctamente" });
   } catch (error) {
-    console.error("Error al crear la reservación:", error);
-    res.status(500).json({ message: "Error al crear la reservación", error });
+    console.error("Error al crear reservación:", error);
+    res.status(500).json({ error: "Error al crear la reservación" });
   }
 };
 

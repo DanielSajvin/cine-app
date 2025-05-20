@@ -8,6 +8,12 @@ module.exports = {
       VALUES (?, 'reservado', ?, ?)
     `,
 
+  obtenerIdDelAsiento:
+    "SELECT id FROM asientos WHERE fila = ? AND columna = ? AND salas_id = ?",
+
+  insertarReservacion:
+    "INSERT INTO reservaciones (fecha, estado, usuarios_id, asientos_id) VALUES (?, ?, ?, ?)",
+
   listarReservaciones: `
     SELECT 
       r.id,
