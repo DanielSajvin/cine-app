@@ -23,7 +23,7 @@ const Header = ({ usuario, tipoUsuario }) => {
           {tipoUsuario === "admin" && (
             <>
               <button className="header-btn" onClick={() => navigate("/crear-sala")}>Crear Sala</button>
-              <button className="header-btn" onClick={() => navigate("/modificar-sala")}>Modificar Sala</button>
+       
               <button className="header-btn" onClick={() => navigate("/deshabilitar-usuario")}>Deshabilitar Usuario</button>
               <button className="header-btn" onClick={() => navigate("/crear-pelicula")}>Crear Película</button>
               <button className="header-btn" onClick={() => navigate("/modificar-pelicula")}>Modificar Película</button>

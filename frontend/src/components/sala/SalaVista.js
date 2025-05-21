@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Header from "../header/Header";
 import Footer from "../header/Footer";
@@ -16,6 +16,8 @@ const SalaVista = () => {
   // estados para asientos seleccionados y ocupados
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState([]);
+
+  const navigate = useNavigate();
 
   // Verifica si el token existe y decodifica el token para obtener el nombre de usuario y tipo de usuario
   useEffect(() => {
@@ -126,11 +128,18 @@ const SalaVista = () => {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Reservación realizada exitosamente");
+        const detallesPago = {
+          pelicula: sala.pelicula_nombre,
+          sala: sala.name,
+          asientos: selectedSeats,
+          salaId: sala.id, // ✅ Incluye salaId aquí dentro
+          total: selectedSeats.length * 25, // precio fijo por asiento
+        };
+        // Redirige a la vista de pago, pasando datos por estado
+        navigate("/pago", { state: detallesPago });
 
-        // Agrega los nuevos asientos a la lista de ocupados
-        setOccupiedSeats([...occupiedSeats, ...selectedSeats]);
-        setSelectedSeats([]); // limpia la selección
+        // Limpia selección localmente
+        setSelectedSeats([]);
       } else {
         alert(`Error: ${data.error}`);
       }

@@ -11,6 +11,8 @@ import ModificarSala from "./components/admin/ModificarSala";
 import CrearPelicula from "./components/admin/CrearPelicula";
 import ModificarPelicula from "./components/admin/ModificarPelicula";
 import SalaVista from "./components/sala/SalaVista"
+import Pago from "./components/pago/Pago";
+import PagoQR from "./components/pago/PagoQr";
 
 function App() {
   return (
@@ -21,6 +23,10 @@ function App() {
         <Route path="/login" element={<Formulario />} />
 
         <Route path="/sala/:idPelicula" element={<SalaVista />} />
+
+        <Route path="/pago" element={<Pago />} />
+
+        <Route path="/pagoQR" element={<PagoQR />} />
 
         <Route
           path="/home"

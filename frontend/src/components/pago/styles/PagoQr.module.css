@@ -1,0 +1,74 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1e1e2f;
+  color: #f1f1f1;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.pdfBtn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.pdfBtn:hover {
+  background-color: #1e7e34;
+}
+
+.ticket {
+  background-color: #2a2a3f;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #ffd700; /* amarillo dorado para destacar el título */
+}
+
+.details {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.details p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.qrContainer {
+  margin-top: 1rem;
+}
+
+.volverBtn {
+  margin-top: 2rem;
+  padding: 0.6rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.volverBtn:hover {
+  background-color: #0056b3;
+}

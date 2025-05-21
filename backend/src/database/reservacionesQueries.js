@@ -40,6 +40,6 @@ module.exports = {
   SELECT a.fila, a.columna
   FROM reservaciones r
   JOIN asientos a ON r.asientos_id = a.id
-  WHERE a.salas_id = ? AND r.estado = 'activo'
+  WHERE a.salas_id = ? AND r.estado = 'reservado'
 `,
 };

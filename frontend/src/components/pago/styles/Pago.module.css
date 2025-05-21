@@ -1,0 +1,42 @@
+/* src/pages/Pago.module.css */
+
+.pago {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+strong {
+  color: #555;
+}
+
+.buttonPago {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  background-color: #1d72b8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonPago:hover {
+  background-color: #155a96;
+}
